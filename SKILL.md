@@ -1,6 +1,6 @@
 ---
 name: devops
-description: "End-to-end project management: environment setup, AI-powered smart sync, and complex deployment (Docker/uv) with README-first intelligence."
+description: "End-to-end project management: environment setup, AI-powered smart sync, core git ops, and complex deployment (Docker/uv) with README-first intelligence."
 metadata:
   {
     "openclaw":
@@ -21,29 +21,35 @@ metadata:
   }
 ---
 
-# DevOps Agent Skill (formerly GitHub Advanced)
+# DevOps Agent Skill
 
 ## 1. Environment & Identity (Self-Healing)
-- **Identity Check**: If `git config user.name` is missing, ask the user before the first commit.
-- **Auth**: Guide through `gh auth login` if `gh auth status` fails.
-- **Modern Tools**: Check for `uv`, `docker`, or `npm` based on project context.
+- **Identity Check**: If `git config user.name` is missing, ask user: "I need your name and email for Git commits."
+- **Auth**: If `gh auth status` fails, guide user to run `gh auth login`.
+- **Tool Detection**: Check for `uv`, `docker`, `npm`, or `pip` based on project context.
 
-## 2. Deployment Intelligence (README-First)
-**CRITICAL**: Before running or deploying any project, ALWAYS read `README.md` to identify:
-- **Environment Management**: Does it use `uv`, `poetry`, `venv`, or `npm`?
-- **Configuration**: Are `.env`, `config.yaml`, or `secrets.json` required?
-- **Containerization**: Is there a `Dockerfile` or `docker-compose.yml`?
-- **Run Commands**: Identify the specific start scripts (e.g., `uv run`, `docker-compose up`).
+## 2. Smart Sync & AI Semantics
+- **Creation**: `git init` and `gh repo create <name> --public --source=. --push`.
+- **AI Commits**: Analyze `git diff --cached` and generate semantic messages (e.g., `feat:`, `fix:`, `docs:`).
+- **Auto-Push**: Automated `git add` -> `commit` -> `git push`.
 
-## 3. Smart Sync (AI-Powered)
-- **Analysis**: Use `git diff --cached` and AI to generate semantic commit messages.
-- **Workflow**: Automated `git add` -> `AI commit` -> `git push`.
-
-## 4. Maintenance & Operations
-- **Discovery**: `git log --oneline --graph`, `git status -sb`.
+## 3. Core Git Operations (Discovery & Maintenance)
+- **Status**: `git status -sb` (Concise status).
+- **History**: `git log --oneline --graph --decorate -n 10` (Visual history).
+- **Diff**: `git diff` (Unstaged) and `git diff --cached` (Staged).
 - **Sync**: `git pull --rebase origin $(git branch --show-current)`.
-- **CI Status**: `gh run list` and `gh run view --log-failed`.
 
-## 5. Troubleshooting
-- **Missing Config**: If a `.env` or `config.yaml` is mentioned in README but missing, alert the user immediately.
-- **Auth Failure**: Provide the exact `gh auth login` command.
+## 4. Deployment Intelligence (README-First)
+**CRITICAL**: Before running/deploying, ALWAYS read `README.md`:
+- **Env**: Is it `uv run`, `npm start`, or `python main.py`?
+- **Config**: Are `.env` or `config.yaml` required? If missing, alert user.
+- **Docker**: Check for `Dockerfile` or `docker-compose.yml`.
+
+## 5. Quality & Operations (CI/Run)
+- **Pre-flight**: Run `pytest` or `python -m py_compile` before pushing.
+- **Remote CI**: `gh run list` and `gh run view --log-failed` to check GitHub Actions.
+- **One-Click Run**: Execute identified start scripts from README.
+
+## 6. Troubleshooting
+- **Permission**: For repo deletion, user must run `gh auth refresh -s delete_repo`.
+- **Conflicts**: Use `git pull --rebase` and resolve manually if needed.
