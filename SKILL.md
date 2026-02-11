@@ -1,83 +1,49 @@
 ---
-name: github
-description: "End-to-end GitHub management: setup, auth, smart sync, CI checks, and deployment."
+name: devops
+description: "End-to-end project management: environment setup, AI-powered smart sync, and complex deployment (Docker/uv) with README-first intelligence."
 metadata:
   {
     "openclaw":
       {
-        "emoji": "🐙",
+        "emoji": "🛠️",
         "requires": { "bins": ["gh", "git"] },
         "install":
           [
             {
               "id": "apt",
               "kind": "apt",
-              "package": "gh git",
-              "bins": ["gh", "git"],
-              "label": "Install GitHub CLI and Git (apt)",
+              "package": "gh git docker.io",
+              "bins": ["gh", "git", "docker"],
+              "label": "Install DevOps Toolchain (apt)",
             },
           ],
       },
   }
 ---
 
-# GitHub Advanced Skill
+# DevOps Agent Skill (formerly GitHub Advanced)
 
-## 1. Setup & Auth (Environment Self-Healing)
+## 1. Environment & Identity (Self-Healing)
+- **Identity Check**: If `git config user.name` is missing, ask the user before the first commit.
+- **Auth**: Guide through `gh auth login` if `gh auth status` fails.
+- **Modern Tools**: Check for `uv`, `docker`, or `npm` based on project context.
 
-Before any operation, check environment:
-- **Check Git/GH**: `git --version && gh --version`
-- **Interactive Auth**: If `gh auth status` fails, prompt user:
-  ```bash
-  gh auth login --hostname github.com -p https -w
-  ```
-- **Git Identity**: If `git config user.name` is empty, ask the user:
-  "I need your Git identity to sign commits. Please provide your Name and Email."
-  Then set them:
-  ```bash
-  git config --global user.name "Your Name"
-  git config --global user.email "your@email.com"
-  ```
+## 2. Deployment Intelligence (README-First)
+**CRITICAL**: Before running or deploying any project, ALWAYS read `README.md` to identify:
+- **Environment Management**: Does it use `uv`, `poetry`, `venv`, or `npm`?
+- **Configuration**: Are `.env`, `config.yaml`, or `secrets.json` required?
+- **Containerization**: Is there a `Dockerfile` or `docker-compose.yml`?
+- **Run Commands**: Identify the specific start scripts (e.g., `uv run`, `docker-compose up`).
 
-## 2. Smart Repo Creation & Sync
+## 3. Smart Sync (AI-Powered)
+- **Analysis**: Use `git diff --cached` and AI to generate semantic commit messages.
+- **Workflow**: Automated `git add` -> `AI commit` -> `git push`.
 
-To create and push a local project:
-```bash
-# In project directory
-git init
-gh repo create <repo-name> --public --source=. --remote=origin --push
-```
+## 4. Maintenance & Operations
+- **Discovery**: `git log --oneline --graph`, `git status -sb`.
+- **Sync**: `git pull --rebase origin $(git branch --show-current)`.
+- **CI Status**: `gh run list` and `gh run view --log-failed`.
 
-To auto-sync with AI-generated messages:
-1. **Analyze**: Run `git diff --cached` to see what changed.
-2. **Summarize**: Describe the changes (e.g., "Fix: update main.py logic" or "Feat: add new test case").
-3. **Commit**: `git commit -m "<AI-generated message>"`
-4. **Push**: `git push origin $(git branch --show-current)`
-
-## 3. Core Git Operations (Discovery & Maintenance)
-
-Keep your local copy fresh and explore history:
-- **Pull**: `git pull --rebase origin $(git branch --show-current)` (Fetch and rebase to keep history clean).
-- **Log**: `git log --oneline --graph --decorate -n 10` (Visual history of last 10 commits).
-- **Status**: `git status -sb` (Concise status showing branch info).
-- **Diff**: `git diff` (Unstaged changes) or `git diff --cached` (Staged changes).
-- **Show**: `git show <commit-hash>` (Details of a specific commit).
-
-## 4. Pre-flight CI Checks
-
-Run local checks before pushing to prevent broken builds:
-- **Python**: `pytest` or `python -m py_compile *.py`
-- **Node**: `npm test`
-- **GitHub Actions**: `gh run list` to check remote status.
-
-## 4. Deployment & Run
-
-Run the project locally or trigger deployment:
-- **Local Run**: `python main.py` or `npm start`
-- **Remote Trigger**: `gh workflow run deploy.yml`
-
-## 5. Standard Troubleshooting
-
-- **Auth Error**: Run `gh auth login`.
-- **Merge Conflict**: `git pull --rebase origin main` then resolve.
-- **CI Failure**: `gh run view --log-failed`.
+## 5. Troubleshooting
+- **Missing Config**: If a `.env` or `config.yaml` is mentioned in README but missing, alert the user immediately.
+- **Auth Failure**: Provide the exact `gh auth login` command.
