@@ -1,58 +1,33 @@
-# DevOps Agent (GitHub Manager) 🦉
+# DevOps Agent Skill 🦉
 
-An AI-powered end-to-end DevOps automation skill and toolkit. Designed to bring intelligence to your daily development loop: from environment setup and secret scrubbing, to semantic commits and complex deployment.
+An AI-powered end-to-end DevOps automation **Skill** designed specifically for AI Agents (like OpenClaw). It acts as the "Brain" and "Hands" for managing a local software project lifecycle: from environment setup and secret scrubbing, to semantic commits and complex deployments.
 
 ## ✨ Core Features
 
-1. **AI-Driven Git Ops**: Automatically analyzes your `git diff` and generates clean, semantic commit messages.
-2. **Built-in Security Scrub**: Runs a pre-flight scan (`scripts/safety_scrub.py`) to detect hardcoded secrets and forces them into `.env` before any commit.
-3. **AI-IDE Integration**: Seamlessly works with `opencode-ai` for complex code refactoring and feature implementation.
-4. **Self-Healing Environment**: Automatically detects missing dependencies (like `uv`, `pytest`, `docker`) and guides you to fix them.
-5. **LLM Agnostic**: Supports OpenAI and seamless integration with domestic LLMs (e.g., Aliyun Bailian / Qwen).
+1. **AI-Driven Git Ops**: The Agent automatically analyzes `git diff` and generates clean, semantic commit messages based on standard conventions.
+2. **Built-in Security Scrub**: Enforces a strict pre-flight scan (`scripts/safety_scrub.py`) to detect hardcoded secrets and force them into `.env` before any commit.
+3. **AI-IDE Integration**: Seamlessly spawns `opencode` for complex code refactoring, feature implementation, and codebase analysis.
+4. **Self-Healing Environment**: Automatically detects missing dependencies (like `uv`, `pytest`, `docker`) in the target project and guides the user to fix them.
 
 ## 🧠 For AI Agents (The Brain)
-If you are an AI Agent (like OpenClaw), your primary instruction manual is **[`SKILL.md`](SKILL.md)**. Read it to understand your identity, boundaries, and how to execute smart sync operations.
+If you are an AI Agent, your primary instruction manual is **[`SKILL.md`](SKILL.md)**. Read it to understand your identity, boundaries, and how to execute smart sync operations.
 
-## 🚀 Setup & Usage (Modern Workflow)
+## 🚀 How to Install (For Humans)
 
-We strongly recommend using **[uv](https://github.com/astral-sh/uv)** for lightning-fast Python dependency management.
+Since this is purely an Agent Skill (not a standalone app), installation is just about making it accessible to your AI platform.
 
-1. **Clone & Configure**:
+**For OpenClaw:**
+1. Clone this repository into your workspace or skills folder.
    ```bash
    git clone https://github.com/smielchk/devops-agent.git
-   cd devops-agent
-   cp config.yaml.example config.yaml
    ```
-
-2. **Install Dependencies (via uv)**:
+2. Link it to OpenClaw's skill registry:
    ```bash
-   uv venv
-   uv pip install -r requirements.txt
+   ln -s $(pwd)/devops-agent ~/.npm-global/lib/node_modules/openclaw/skills/devops-agent
    ```
+3. That's it! There are no Python packages or Docker containers to build. The Agent executes native commands (like `git` and `python3`) directly using the `SKILL.md` instructions.
 
-3. **Run Smart Sync**:
-   This will run safety checks, stage changes, generate a semantic commit message, and push to `master`.
-   ```bash
-   uv run main.py
-   ```
-
-## 🧪 Pre-flight Checks (Testing)
-Ensure your code is solid before pushing:
-```bash
-uv run pytest
-```
-
-## 🐳 Docker Deployment
-- Build: `docker build -t devops-agent .`
-- Run: `docker run --env-file .env devops-agent`
-
-## 🇨🇳 国产大模型适配 (Aliyun Bailian / Qwen)
-
-The DevOps Agent supports seamless integration with domestic LLMs like Aliyun Bailian (Qwen).
-
-### Configuration Example
-Add your Aliyun credentials to your `.env`:
-```env
-ALIYUN_BAILIAN_API_KEY=your_sk_here
-OPENAI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
-```
+## 📁 Repository Structure
+- `SKILL.md`: The core prompt and operating manual for the AI.
+- `scripts/safety_scrub.py`: Zero-dependency secret scanner.
+- `reference/`: Best practices (e.g., Git conventions, Opencode prompts) that the AI reads on demand.
